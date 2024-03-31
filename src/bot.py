@@ -15,7 +15,7 @@ class Client(commands.Bot):
         super().__init__(command_prefix='!-&%', intents=intents)
 
     async def setup_hook(self):
-        for foldername, subfolders, filenames in os.walk('./commands'):
+        for foldername, subfolders, filenames in os.walk('./Commands'):
             for fileName in filenames:
                 if fileName.endswith('.py'):
                     # Construct the module path by removing the './' prefix
