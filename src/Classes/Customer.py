@@ -1,8 +1,16 @@
+from Classes.PlayableCharacter import PlayableCharacter
+from Classes.DiscordUser import DiscordUser
+
 class Customer:
-    def __init__(self, id, character, discord_info):
-        self._id = id
-        self._character = character
-        self._discord_info = discord_info
+    def __init__(self, data: dict = None):
+        if data is not None:
+            self._id = data["CGOrder"].get("id")
+            self._character = PlayableCharacter(data.get("PlayableCharacter"))
+            self._discord_info = DiscordUser(data.get("DiscordUser"))
+        else:
+            self._id = None
+            self._character = None
+            self._discord_info = None
 
     @property
     def id(self):

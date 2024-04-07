@@ -1,10 +1,17 @@
 class PlayableCharacter:
-    def __init__(self, id, name, last_name, lodestone_url, world):
-        self._id = id
-        self._name = name
-        self._last_name = last_name
-        self._lodestone_url = lodestone_url
-        self._world = world
+    def __init__(self, data: dict = None):
+        if data is not None:
+            self._id = data.get("id")
+            self._name = data.get("name")
+            self._last_name = data.get("last_name")
+            self._lodestone_url = data.get("lodestone_url")
+            self._world = data.get("world")
+        else:
+            self._id = None
+            self._name = None
+            self._last_name = None
+            self._lodestone_url = None
+            self._world = None
 
     @property
     def id(self):
@@ -45,3 +52,16 @@ class PlayableCharacter:
     @world.setter
     def world(self, value):
         self._world = value
+
+    def _split_full_name(self, full_name: str):
+        if full_name:
+            names = full_name.split()
+            if len(names) > 1:
+                self._name = names[0]
+                self._last_name = " ".join(names[1:])
+            else:
+                self._name = names[0]
+                self._last_name = ""
+        else:
+            self._name = None
+            self._last_name = None

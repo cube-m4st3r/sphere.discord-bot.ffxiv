@@ -2,12 +2,19 @@ from Classes.Customer import Customer
 from Classes.CGOrderItem import CGOrderItem
 
 class CGOrder:
-    def __init__(self, id: int, customer: Customer, status: str, reward: int, CGOrderItems: list):
-        self._id = id
-        self._customer = customer
-        self._status = status
-        self._reward = reward
-        self._CGOrderItems = CGOrderItems
+    def __init__(self, data: dict = None):
+        if data is not None:
+            self._id = data.get("id")
+            self._customer = data.get("customer")
+            self._status = data.get("status")
+            self._reward = data.get("reward")
+            self._CGOrderItems = data.get("CGOrderItems", [])
+        else:
+            self._id = None
+            self._customer = None
+            self._status = None
+            self._reward = None
+            self._CGOrderItems = []
 
     @property
     def id(self):

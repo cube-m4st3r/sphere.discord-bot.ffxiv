@@ -1,9 +1,17 @@
 class Item:
-    def __init__(self, id, name, description, isCollectable):
-        self._id = id
-        self._name = name
-        self._description = description
-        self._isCollectable = isCollectable
+    def __init__(self, data: dict = None):
+        if data is not None:
+            self._id = data.get("id")
+            self._name = data.get("name")
+            self._description = data.get("description")
+            self._isCollectable = data.get("isCollectable")
+            self._isCanBeHQ = data.get("CanBeHQ")
+        else:
+            self._id = None
+            self._name = None
+            self._description = None
+            self._isCollectable = None
+            self._isCanBeHQ = None
 
     @property
     def id(self):
@@ -20,6 +28,10 @@ class Item:
     @property
     def isCollectable(self):
         return self._isCollectable
+    
+    @property
+    def isCanBeHQ(self):
+        return self._isCanBeHQ
 
     @id.setter
     def id(self, value):
@@ -36,3 +48,7 @@ class Item:
     @isCollectable.setter
     def isCollectable(self, value):
         self._isCollectable = value
+
+    @isCanBeHQ.setter
+    def isCanBeHQ(self, value):
+        self._isCanBeHQ

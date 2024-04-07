@@ -1,8 +1,8 @@
-from marshmallow import Schema, fields, post_load
-from Classes.Item import Item
+from marshmallow import Schema, fields
 
 class ItemSchema(Schema):
     id = fields.Int(required=True)
     name = fields.Str(required=True)
     description = fields.Str(required=True)
     isCollectable = fields.Bool(required=True)
+    CanBeHQ = fields.Bool(required=True)

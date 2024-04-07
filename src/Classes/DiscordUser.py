@@ -1,7 +1,11 @@
 class DiscordUser:
-    def __init__(self, id, username):
-        self._id = id
-        self._username = username
+    def __init__(self, data: dict = None):
+        if data is not None:
+            self._id = data.get("id")
+            self._username = data.get("username")
+        else:
+            self._id = None
+            self._username = None
 
     @property
     def id(self):
