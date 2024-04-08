@@ -16,7 +16,7 @@ class OrderGroup(app_commands.Group):
     async def view(self, interaction: discord.Interaction, id: int):
         await interaction.response.defer()
 
-        full_order = load_full_cgorder(id=id)
+        full_order = await load_full_cgorder(id=id)
 
         await interaction.followup.send(embed=await build_full_order_embed(full_order=full_order))
 
@@ -27,7 +27,7 @@ class OrderGroup(app_commands.Group):
 
 async def submit_data_to_backend(data):
     async with aiohttp.ClientSession() as session:
-        async with session.post(f"{config['backend_url']}/ffxiv/add_gcorder", json=data) as response:
+        async with session.post(f"{config['backend_url']}/ffxiv/add_gcorder", json=data, ssl=False) as response:
             if response.status == 200:
                 return await response.json()
             else:
@@ -50,7 +50,7 @@ async def handle_order_info_input(data):
     cgOrder = data["cgOrder"]
 
     if cgOrder.CGOrderItems is not None:
-        cg_order_item_data = [serialize_cg_order_item(item) for item in cgOrder.CGOrderItems]
+        cg_order_item_data = [await serialize_cg_order_item(item) for item in cgOrder.CGOrderItems]
     else:
         pass
 
@@ -137,7 +137,7 @@ class AddOrderModal(discord.ui.Modal):
 
         response_json = await submit_data_to_backend(data=data)
         if response_json:
-            full_order = load_full_cgorder(id=response_json["id"])
+            full_order = await load_full_cgorder(id=response_json["id"])
 
             await interaction.response.send_message(embed=await build_full_order_embed(full_order=full_order))
 

@@ -3,17 +3,17 @@ from Schemas.Customer import CustomerSchema, PlayableCharacterSchema, DiscordUse
 from Schemas.Item import ItemSchema
 
 
-def deserialize_playable_character(data: dict):
+async def deserialize_playable_character(data: dict):
     playable_character = PlayableCharacterSchema()
     return playable_character.load(data=data)
 
 
-def deserialize_discord_user(data: dict):
+async def deserialize_discord_user(data: dict):
     discord_user_schema = DiscordUserSchema()
     return discord_user_schema.load(data)
 
 
-def deserialize_customer(data: dict, character: PlayableCharacterSchema, discord_info: DiscordUserSchema):
+async def deserialize_customer(data: dict, character: PlayableCharacterSchema, discord_info: DiscordUserSchema):
     customer_schema = CustomerSchema()
     return customer_schema.load({
         "id": data["customer_id"],
@@ -22,12 +22,12 @@ def deserialize_customer(data: dict, character: PlayableCharacterSchema, discord
     })
 
 
-def deserialize_item(data: dict):
+async def deserialize_item(data: dict):
     item_schema = ItemSchema()
     return item_schema.load(data)
 
 
-def deserialize_cgOrder_item(item: ItemSchema, amount: int):
+async def deserialize_cgOrder_item(item: ItemSchema, amount: int):
     cgOrder_item_schema = CGOrderItemSchema()
     return cgOrder_item_schema.load({
         "item": item,
@@ -35,7 +35,7 @@ def deserialize_cgOrder_item(item: ItemSchema, amount: int):
     })
 
 
-def deserialize_cgOrder(data: dict, customer: CustomerSchema, items: list):
+async def deserialize_cgOrder(data: dict, customer: CustomerSchema, items: list):
     cgOrder_schema = CGOrderSchema()
     return cgOrder_schema.load({
         "id": data["id"],
@@ -46,7 +46,7 @@ def deserialize_cgOrder(data: dict, customer: CustomerSchema, items: list):
     })
 
 
-def serialize_playable_character(character):
+async def serialize_playable_character(character):
     return {
         "PlayableCharacter": {
             "name": character.name,
@@ -57,7 +57,7 @@ def serialize_playable_character(character):
     }
 
 
-def serialize_discord_info(user):
+async def serialize_discord_info(user):
     return {
         "DiscordUser": {
             "username": user.username
@@ -65,7 +65,7 @@ def serialize_discord_info(user):
     }
 
 
-def serialize_item(item):
+async def serialize_item(item):
     return {
         "id": item.id,
         "name": item.name,
@@ -75,14 +75,14 @@ def serialize_item(item):
     }
 
 
-def serialize_cg_order_item(item):
+async def serialize_cg_order_item(item):
     return {
         "amount": item.amount,
         "Item": serialize_item(item.item)
     }
 
 
-def serialize_cg_order(order):
+async def serialize_cg_order(order):
     cg_order_items = [serialize_cg_order_item(
         item) for item in order.CGOrderItems]
     return {
