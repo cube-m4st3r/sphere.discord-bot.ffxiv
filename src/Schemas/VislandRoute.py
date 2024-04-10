@@ -11,5 +11,5 @@ class VislandRouteSchema(Schema):
     last_updated_at = fields.DateTime(required=True)
     creator = fields.Nested(DiscordUserSchema)
     updater = fields.Nested(DiscordUserSchema)
-    vislandrouteitem = fields.List(fields.Nested(VislandRouteItemSchema))
     routeCode = fields.String(required=True)
+    vislandrouteitem = fields.List(fields.Nested(VislandRouteItemSchema))
