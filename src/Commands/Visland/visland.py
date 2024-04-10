@@ -4,6 +4,7 @@ from discord.ext import commands
 from config import botConfig, config
 import aiohttp
 from Loaders import load_full_route
+from datetime import datetime
 
 
 class VislandGroup(app_commands.Group):
@@ -45,8 +46,12 @@ async def build_full_route_embed(full_route):
     full_route_embed.add_field(name="Steps:", value=f"{full_route.steps}")
     full_route_embed.add_field(name="Creator:", value=f"{full_route.creator.username}")
     full_route_embed.add_field(name="Updater:", value=f"{full_route.updater.username}")
-    full_route_embed.add_field(name="Created at:", value=f"{full_route.createdAt["date"]}")
-    full_route_embed.add_field(name="Last updated at:", value=f"{full_route.lastUpdatedAt["date"]}")
+    
+    createdDate_obj = datetime.strptime(full_route.createdAt["date"], '%Y-%m-%d %H:%M:%S.%f')
+    lastUpdatedDate_obj = datetime.strptime(full_route.lastUpdatedAt["date"], '%Y-%m-%d %H:%M:%S.%f')
+
+    full_route_embed.add_field(name="Created at:", value=f"{createdDate_obj.strftime('%d.%m.%Y @ %H:%M:%S')}")
+    full_route_embed.add_field(name="Last updated at:", value=f"{lastUpdatedDate_obj.strftime('%d.%m.%Y @ %H:%M:%S')}")
 
     return full_route_embed
 
