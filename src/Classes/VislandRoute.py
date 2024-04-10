@@ -3,14 +3,14 @@ class VislandRoute:
         if data is not None:
             self._id = data.get("id")
             self._name = data.get("name")
-            self._steps = data.get("stepsAmount")
+            self._steps = data.get("steps")
             self._pasteBinLink = data.get("pasteBinLink")
             self._createdAt = data.get("createdAt")
             self._lastUpdatedAt = data.get("lastUpdatedAt")
             self._creator = data.get("creator")
             self._updater = data.get("updater")
-            self._VislandRouteItems = data.get("Items", [])
-            self._routeCode = data.get("routeCode")
+            self._VislandRouteItems = data.get("VislandRouteItems", [])
+            self._routeCode = data.get("code")
         else:
             self._id = None
             self._name = None
@@ -18,10 +18,10 @@ class VislandRoute:
             self._pasteBinLink = None
             self._createdAt = None
             self._lastUpdatedAt = None
-            self._creatorID = None
-            self._updaterID = None
+            self._creator = None
+            self._updater = None
             self._VislandRouteItems = None
-            self._routeCode = None
+            self._code = None
 
     @property
     def id(self):
@@ -48,12 +48,12 @@ class VislandRoute:
         return self._lastUpdatedAt
     
     @property
-    def creatorID(self):
-        return self._creatorID
+    def creator(self):
+        return self._creator
     
     @property
-    def updaterID(self):
-        return self._updaterID
+    def updater(self):
+        return self._updater
     
     @property
     def VislandRouteItems(self):
@@ -87,13 +87,13 @@ class VislandRoute:
     def lastUpdatedAt(self, value):
         self._lastUpdatedAt = value
 
-    @creatorID.setter
-    def creatorID(self, value):
-        self._creatorID = value
+    @creator.setter
+    def creator(self, value):
+        self._creator = value
 
-    @updaterID.setter
-    def updaterID(self, value):
-        self._updaterID = value
+    @updater.setter
+    def updater(self, value):
+        self._updater = value
 
     @VislandRouteItems.setter
     def VislandRouteItems(self, value):
