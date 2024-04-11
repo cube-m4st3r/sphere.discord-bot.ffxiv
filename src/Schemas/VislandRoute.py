@@ -12,4 +12,4 @@ class VislandRouteSchema(Schema):
     creator = fields.Nested(DiscordUserSchema)
     updater = fields.Nested(DiscordUserSchema)
     routeCode = fields.String(required=True)
-    vislandrouteitem = fields.List(fields.Nested(VislandRouteItemSchema))
+    vislandrouteitem = fields.List(fields.Nested(VislandRouteItemSchema), many=True)
